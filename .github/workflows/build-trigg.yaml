@@ -31,12 +31,12 @@ jobs:
       - name: check
         id: check
         run: |
-          export head_sha_base=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/auroaj/actions/actions/runs?status=in_progress \
+          head_sha_base=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/auroaj/actions/actions/runs?status=in_progress \
           jq '.workflow_runs[] | select(.name == "Build base Container").head_sha')
 
           echo "::set-output name=head_sha_base::${head_sha_base}"
           echo ${{ github.sha }}
-          echo ${{ head_sha_base }}
+          echo ${head_sha_base}
 
   push:
     if: ${{ needs.check-if.outputs.head_sha_base != github.sha }}
