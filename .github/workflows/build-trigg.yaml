@@ -1,4 +1,4 @@
-name: Build amp Container
+name: Build Trigger Container
 
 on:
   workflow_run:
