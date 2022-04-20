@@ -17,9 +17,8 @@ on:
   workflow_run:
     workflows:
       - "Build base Container"
-    type:
+    types:
       - "completed"
-      - "complete"
 
 
 
