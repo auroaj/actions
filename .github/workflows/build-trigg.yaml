@@ -1,0 +1,28 @@
+name: Build amp Container
+
+on:
+  workflow_run:
+    workflows:
+      - "Build base Container"
+    type:
+      - "completed"
+      - "complete"
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "trig/**"
+      # - ".github/workflows/build-amp-container.yaml"
+
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test echo
+        run: |
+          echo "build trigger"
+          echo ${{ github.event_name }}
+          echo ${{ github.action }}
