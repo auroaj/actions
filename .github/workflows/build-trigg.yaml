@@ -12,7 +12,7 @@ on:
 
 jobs:
   push:
-    if: ${{ (github.event_name == "workflow_run" && github.event.action == "completed") || github.event_name == "push" }}
+    if: ${{ (github.event_name == 'workflow_run' && github.event.action == 'completed') || github.event_name == 'push' }}
     runs-on: ubuntu-latest
 
     steps:
