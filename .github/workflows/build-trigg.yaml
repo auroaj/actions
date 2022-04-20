@@ -8,12 +8,6 @@ on:
       - "completed"
       - "complete"
 
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "trig/**"
-      # - ".github/workflows/build-amp-container.yaml"
 
 
 jobs:
