@@ -23,8 +23,21 @@ on:
 
 
 jobs:
+  check-if:
+    outputs:
+      head_sha_base: ${{ steps.check.outputs.head_sha_base }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: check
+        id: check
+        run: |
+          head_sha_base=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/auroaj/actions/actions/runs?status=in_progress \
+          jq '.workflow_runs[] | select(.name == "Build base Container").head_sha')
+
+          echo "::set-output name=head_sha_base::${head_sha_base}"
+
   push:
-    if: ${{ github.event.action != 'requested' }}
+    if: ${{ needs.check.outputs.head_sha_base != env.GITHUB_SHA }}
     runs-on: ubuntu-latest
 
     steps:

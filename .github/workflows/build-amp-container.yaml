@@ -17,7 +17,7 @@ on:
     branches:
       - main
     paths:
-      - "amp/**"
+      - "amp2/**"
       # - ".github/workflows/build-amp-container.yaml"
 
 env:
