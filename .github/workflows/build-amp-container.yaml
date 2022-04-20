@@ -4,8 +4,8 @@ on:
   workflow_run:
     workflows:
       - "Build base Container"
-    # type:
-    #   - complete
+    type:
+      - complete
   # push:
   #   branches:
   #     - main
@@ -17,7 +17,7 @@ on:
       - main
     paths:
       - "amp/**"
-      - ".github/workflows/build-amp-container.yaml"
+      # - ".github/workflows/build-amp-container.yaml"
 
 env:
   docker_image_amp: us-docker.pkg.dev/shared-buckets-333815/amp/k8s-amp

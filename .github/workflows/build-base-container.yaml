@@ -58,7 +58,7 @@ jobs:
       - name: Set short sha
         id: vars
         run: |
-          echo "hello"
+          echo "hello!"
           echo "::set-output name=sha_short::${GITHUB_SHA::7}"
 
       # - name: For PR build and push base image
