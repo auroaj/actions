@@ -1,0 +1,89 @@
+name: Build amp Container
+
+on:
+  workflow_run:
+    workflows:
+      - "Build base Container"
+    type:
+      - complete
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - "amp/**"
+  #     - ".github/workflows/build-amp-container.yaml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "amp/**"
+      - ".github/workflows/build-amp-container.yaml"
+
+env:
+  docker_image_amp: us-docker.pkg.dev/shared-buckets-333815/amp/k8s-amp
+  ols_version: "1.7.15"
+  php_version: "7.4.28"
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test echo
+        run: echo "build amp"
+#       - name: Checkout
+#         uses: actions/checkout@v2
+
+#       - name: Set up Docker Buildx
+#         uses: docker/setup-buildx-action@v1
+
+#       - name: Cache Docker layers
+#         uses: actions/cache@v2
+#         with:
+#           path: /tmp/.buildx-cache
+#           key: amp-buildx-${{ github.sha }}
+#           restore-keys: |
+#             amp-buildx-
+
+# #      - name: Validate Vulnerabilities using Container Scan
+# #        uses: Azure/container-scan@v0
+# #        with:
+# #          image-name: ${{ env.docker_image }}:prod
+
+#       - name: Login to GAR
+#         uses: docker/login-action@v1
+#         with:
+#           registry: us-docker.pkg.dev
+#           username: _json_key
+#           password: ${{ secrets.GCR_SERVICEACCOUNT }}
+
+#       - name: Set short sha
+#         id: vars
+#         run: echo "::set-output name=sha_short::${GITHUB_SHA::7}"
+
+#       - name: For PR build and push AMP
+#         if: github.event_name == 'pull_request'
+#         uses: docker/build-push-action@v2
+#         with:
+#           context: ./amp
+#           push: true
+#           file: amp/Dockerfile
+#           tags: ${{ env.docker_image_amp }}:${{ steps.vars.outputs.sha_short}}
+#           cache-from: type=local,src=/tmp/.buildx-cache
+#           cache-to: type=local,dest=/tmp/.buildx-cache-new
+
+#       - name: For merge build and push AMP and tag as prod
+#         if: github.event_name == 'push'
+#         uses: docker/build-push-action@v2
+#         with:
+#           context: ./amp
+#           push: true
+#           file: amp/Dockerfile
+#           tags: ${{ env.docker_image_amp }}:prod
+#           cache-from: type=local,src=/tmp/.buildx-cache
+#           cache-to: type=local,dest=/tmp/.buildx-cache-new
+
+#       - name: Move cache
+#         run: |
+#           rm -rf /tmp/.buildx-cache
+#           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
