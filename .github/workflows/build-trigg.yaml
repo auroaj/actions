@@ -1,6 +1,19 @@
 name: Build Trigger Container
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "amp/**"
+      - ".github/workflows/build-amp-container.yaml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "amp/**"
+      - ".github/workflows/build-amp-container.yaml"
+
   workflow_run:
     workflows:
       - "Build base Container"
@@ -12,7 +25,7 @@ on:
 
 jobs:
   push:
-    if: ${{ (github.event_name == 'workflow_run' && github.event.action == 'completed') || github.event_name == 'push' }}
+    if: ${{ (github.event_name == 'workflow_run' && github.event.action == 'completed') || github.event_name == 'push' || github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
 
     steps:
