@@ -25,7 +25,7 @@ on:
 
 jobs:
   push:
-    if: ${{ (github.event_name == 'workflow_run' && github.event.action == 'completed') || github.event_name == 'push' || github.event_name == 'pull_request' }}
+    if: ${{ ! github.event.action == 'requested' }}
     runs-on: ubuntu-latest
 
     steps:
