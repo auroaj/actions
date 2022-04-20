@@ -47,7 +47,9 @@ jobs:
       - name: check
         id: check
         run: |
-          echo "${{ steps.files.outputs.all }}" | grep base/ && echo "::set-output name=skip_build::true" || true
+          echo "${{ steps.files.outputs.all }}" | grep "base/" && export skip_build="true" || true
+          echo ${skip_build}
+          echo "::set-output name=skip_build::${skip_build}"
 
   push:
     if: ${{ needs.check.outputs.skip_build != true }}
