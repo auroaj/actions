@@ -4,8 +4,8 @@ on:
   workflow_run:
     workflows:
       - "Build base Container"
-    type:
-      - complete
+    # type:
+    #   - complete
   # push:
   #   branches:
   #     - main
