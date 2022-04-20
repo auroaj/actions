@@ -19,4 +19,5 @@ jobs:
         run: |
           echo "build trigger"
           echo ${{ github.event_name }}
-          echo ${{ github }}
+          echo ${{ github.context.payload }}
+
