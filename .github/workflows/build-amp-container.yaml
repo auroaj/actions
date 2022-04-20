@@ -1,11 +1,11 @@
 name: Build amp Container
 
 on:
-  workflow_run:
-    workflows:
-      - "Build base Container"
-    type:
-      - "completed"
+  # workflow_run:
+  #   workflows:
+  #     - "Build base Container"
+  #   type:
+  #     - "completed"
 
   # push:
   #   branches:
