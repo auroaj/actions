@@ -35,9 +35,11 @@ jobs:
           jq '.workflow_runs[] | select(.name == "Build base Container").head_sha')
 
           echo "::set-output name=head_sha_base::${head_sha_base}"
+          echo ${{ github.sha }}
+          echo ${{ head_sha_base }}
 
   push:
-    if: ${{ needs.check.outputs.head_sha_base != env.GITHUB_SHA }}
+    if: ${{ needs.check.outputs.head_sha_base != github.sha }}
     runs-on: ubuntu-latest
 
     steps:
