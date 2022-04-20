@@ -58,6 +58,7 @@ jobs:
       - name: Set short sha
         id: vars
         run: |
+          sleep 30
           echo "hello!"
           echo "::set-output name=sha_short::${GITHUB_SHA::7}"
 
