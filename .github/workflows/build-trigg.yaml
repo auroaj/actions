@@ -31,7 +31,7 @@ jobs:
       - name: check
         id: check
         run: |
-          head_sha_base=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/auroaj/actions/actions/runs?status=in_progress \
+          head_sha_base=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/auroaj/actions/actions/runs?status=in_progress |\
           jq '.workflow_runs[] | select(.name == "Build base Container").head_sha')
 
           echo "::set-output name=head_sha_base::${head_sha_base}"
