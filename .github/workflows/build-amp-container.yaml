@@ -5,7 +5,8 @@ on:
     workflows:
       - "Build base Container"
     type:
-      - completed
+      - "completed"
+
   # push:
   #   branches:
   #     - main
