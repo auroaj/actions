@@ -16,8 +16,6 @@ env:
 
 jobs:
   push:
-    if: ${{ needs.check-if.outputs.skip_build != 'true' }}
-    needs: check-if
     runs-on: ubuntu-latest
 
     steps:
