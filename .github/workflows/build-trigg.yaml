@@ -3,22 +3,22 @@ name: Build Trigger Container
 on:
   push:
     branches:
-      - main
-    paths:
-      - "amp/**"
-      - ".github/workflows/build-amp-container.yaml"
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "amp/**"
-      - ".github/workflows/build-amp-container.yaml"
+      - push
+  #   paths:
+  #     - "amp/**"
+  #     - ".github/workflows/build-amp-container.yaml"
+  # pull_request:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - "amp/**"
+  #     - ".github/workflows/build-amp-container.yaml"
 
-  workflow_run:
-    workflows:
-      - "Build base Container"
-    types:
-      - "completed"
+  # workflow_run:
+  #   workflows:
+  #     - "Build base Container"
+  #   types:
+  #     - "completed"
 
 
 

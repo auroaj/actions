@@ -7,17 +7,17 @@ on:
   #   type:
   #     - "completed"
 
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - push
   #   paths:
   #     - "amp/**"
   #     - ".github/workflows/build-amp-container.yaml"
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "amp2/**"
+  # pull_request:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - "amp2/**"
       # - ".github/workflows/build-amp-container.yaml"
 
 env:

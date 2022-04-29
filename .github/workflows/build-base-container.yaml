@@ -3,16 +3,16 @@ name: Build base Container
 on:
   push:
     branches:
-      - main
-    paths:
-      - "base/**"
-      - ".github/workflows/build-base-container.yaml"
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "base/**"
-      - ".github/workflows/build-base-container.yaml"
+      - push
+  #   paths:
+  #     - "base/**"
+  #     - ".github/workflows/build-base-container.yaml"
+  # pull_request:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - "base/**"
+  #     - ".github/workflows/build-base-container.yaml"
 
 env:
   docker_image_base: us-docker.pkg.dev/shared-buckets-333815/base/k8s-base
