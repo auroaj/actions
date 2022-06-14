@@ -51,7 +51,7 @@ jobs:
         git config user.name '${{ github.actor }}'
         git config user.email '${{ github.actor }}@users.noreply.github.com'
         set -x
-        sed -i 's/^'${stringToSearch}': .*$/'${stringToSearch}': '${imageTag}'/1' ${pathValues}
+        sed -i 's/'${stringToSearch}': .*$/'${stringToSearch}': '${imageTag}'/1' ${pathValues}
         git add -A
         git commit -m "updated version in ${pathValues}"
 
