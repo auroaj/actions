@@ -41,39 +41,53 @@ jobs:
         repository: ${{ inputs.target_repository }}
         path: target_repo
 
-    - name: Update image tag in file
-      env:
-        imageTag: ${{ inputs.tag }}
-        pathValues: ${{ inputs.pathValues }}
-        stringToSearch: "${{ inputs.stringToSearch }}"
-      working-directory: target_repo
-      run: |
-        git config user.name '${{ github.actor }}'
-        git config user.email '${{ github.actor }}@users.noreply.github.com'
-        set -x
-        sed -i 's/'${stringToSearch}': .*$/'${stringToSearch}': '${imageTag}'/1' ${pathValues}
-        git add -A
-        git commit -m "updated version in ${pathValues}"
-
-    - name: Create Pull Request
-      id: cpr
-      uses: peter-evans/create-pull-request@923ad837f191474af6b1721408744feb989a4c27 # v4.0.4
+    - name: Update Image Version in the related HelmChart values.yaml
+      uses: fjogeleit/yaml-update-action@v0.10.0
       with:
-        path: target_repo
+        valueFile: ${{ inputs.pathValues }}
+        propertyPath: 'app.imageTag'
+        value: ${{ inputs.tag }}
+        repository: owner/target-repository
+        branch: create_pr/${{ inputs.tag }}
+        targetBranch: master
+        createPR: true
+        message: 'Update Image Version to ${{ inputs.tag }}'
         token: ${{ secrets.GIT_ACTION_PAT }}
-        commit-message: Update imageTag
-        committer: GitHub <noreply@github.com>
-        author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-        signoff: false
-        # branch: example-patches
-        # delete-branch: true
-        title: '[Auto] Update imageTag'
-        body: |
-          Update imageTag
-          #TODO Link to original commit/pr
-        # assignees: peter-evans
-        # reviewers: peter-evans
-        # team-reviewers: |
-        #   owners
-        #   maintainers
-        draft: false
+        workDir: target_repo
+
+    # - name: Update image tag in file
+    #   env:
+    #     imageTag: ${{ inputs.tag }}
+    #     pathValues: ${{ inputs.pathValues }}
+    #     stringToSearch: "${{ inputs.stringToSearch }}"
+    #   working-directory: target_repo
+    #   run: |
+    #     git config user.name '${{ github.actor }}'
+    #     git config user.email '${{ github.actor }}@users.noreply.github.com'
+    #     # set -x
+    #     # sed -i 's/'${stringToSearch}': .*$/'${stringToSearch}': '${imageTag}'/1' ${pathValues}
+    #     git add -A
+    #     git commit -m "updated version in ${pathValues}"
+
+    # - name: Create Pull Request
+    #   id: cpr
+    #   uses: peter-evans/create-pull-request@923ad837f191474af6b1721408744feb989a4c27 # v4.0.4
+    #   with:
+    #     path: target_repo
+    #     token: ${{ secrets.GIT_ACTION_PAT }}
+    #     commit-message: Update imageTag
+    #     committer: GitHub <noreply@github.com>
+    #     author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+    #     signoff: false
+    #     # branch: example-patches
+    #     # delete-branch: true
+    #     title: '[Auto] Update imageTag'
+    #     body: |
+    #       Update imageTag
+    #       #TODO Link to original commit/pr
+    #     # assignees: peter-evans
+    #     # reviewers: peter-evans
+    #     # team-reviewers: |
+    #     #   owners
+    #     #   maintainers
+    #     draft: false
