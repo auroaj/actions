@@ -26,7 +26,8 @@ jobs:
     with:
       tag: ${{ github.event.inputs.tag }}
       target_repository: ${{ github.event.inputs.target_repository }}
-      pathValues: "values.yaml"
+      # pathValues: "values.yaml"
+      pathValues: "2-app-workflows-cm.yaml"
       stringToSearch: "imageTag"
 
       github_event_name: ${{ github.event_name }}
