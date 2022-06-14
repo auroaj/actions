@@ -1,0 +1,71 @@
+name: CreatePR reuse
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+      target_repository:
+        required: true
+        type: string
+      pathValues:
+        required: true
+        type: string
+      stringToSearch:
+        required: true
+        type: string
+      github_event_name:
+        required: true
+        type: string
+
+    secrets:
+      GIT_ACTION_PAT:
+        required: true
+      GCP_SA_KEY:
+        required: true
+
+env:
+  environment: ${{ inputs.environment }}
+  github_event_name: ${{ inputs.github_event_name }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # v2.3.4
+      with:
+        token: ${{ secrets.GIT_ACTION_PAT }}
+        repository: ${{ inputs.target_repository }}
+
+    - name: Update image tag in file
+      env:
+        imageTag: ${{ inputs.tag }}
+        pathValues: ${{ inputs.pathValues }}
+        stringToSearch: "${{ inputs.stringToSearch }}"
+      run: |
+        sed -i 's/^'${stringToSearch}': .*$/'${stringToSearch}': '${imageTag}'/1' ${pathValues}
+
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@923ad837f191474af6b1721408744feb989a4c27 # v4.0.4
+      with:
+        token: ${{ secrets.GIT_ACTION_PAT }}
+        commit-message: Update imageTag
+        committer: GitHub <noreply@github.com>
+        author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+        signoff: false
+        # branch: example-patches
+        # delete-branch: true
+        title: '[Auto] Update imageTag'
+        body: |
+          Update imageTag
+          #TODO Link to original commit/pr
+        # assignees: peter-evans
+        # reviewers: peter-evans
+        # team-reviewers: |
+        #   owners
+        #   maintainers
+        draft: false
