@@ -47,7 +47,7 @@ jobs:
         valueFile: ${{ inputs.pathValues }}
         propertyPath: 'app.imageTag'
         value: ${{ inputs.tag }}
-        repository: owner/target-repository
+        repository: ${{ inputs.target_repository }}
         branch: create_pr/${{ inputs.tag }}
         targetBranch: master
         createPR: true
