@@ -48,8 +48,8 @@ jobs:
         stringToSearch: "${{ inputs.stringToSearch }}"
       working-directory: target_repo
       run: |
-        ls -la ./
-        pwd
+        git config user.name '${{ github.actor }}'
+        git config user.email '${{ github.actor }}@users.noreply.github.com'
         sed -i 's/^'${stringToSearch}': .*$/'${stringToSearch}': '${imageTag}'/1' ${pathValues}
         git add -A
         git commit -m "updated version in ${pathValues}"
