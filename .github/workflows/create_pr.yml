@@ -39,13 +39,17 @@ jobs:
       with:
         token: ${{ secrets.GIT_ACTION_PAT }}
         repository: ${{ inputs.target_repository }}
+        path: target_repo
 
     - name: Update image tag in file
       env:
         imageTag: ${{ inputs.tag }}
         pathValues: ${{ inputs.pathValues }}
         stringToSearch: "${{ inputs.stringToSearch }}"
+      working-directory: target_repo
       run: |
+        ls -la ./
+        pwd
         sed -i 's/^'${stringToSearch}': .*$/'${stringToSearch}': '${imageTag}'/1' ${pathValues}
 
     - name: Create Pull Request
