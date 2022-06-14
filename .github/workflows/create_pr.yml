@@ -45,7 +45,7 @@ jobs:
       uses: fjogeleit/yaml-update-action@v0.10.0
       with:
         valueFile: ${{ inputs.pathValues }}
-        propertyPath: 'data.values.yaml.app.imageTag'
+        propertyPath: 'data['values.yaml'].app.imageTag'
         value: ${{ inputs.tag }}
         repository: ${{ inputs.target_repository }}
         branch: create_pr/${{ inputs.tag }}
