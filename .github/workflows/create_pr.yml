@@ -51,6 +51,8 @@ jobs:
         ls -la ./
         pwd
         sed -i 's/^'${stringToSearch}': .*$/'${stringToSearch}': '${imageTag}'/1' ${pathValues}
+        git add -A
+        git commit -m "updated version in ${pathValues}"
 
     - name: Create Pull Request
       id: cpr
