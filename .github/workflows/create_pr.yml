@@ -73,7 +73,7 @@ jobs:
           DATA=$(cat data.tmp) yq -i '.${{ inputs.configmap_prop }} = strenv(DATA)' ${{ inputs.configFile }}
           rm data.tmp
 
-    - name: Update image version in ConfigMap
+    - name: Update image version in YAML
       if: $(${{ inputs.configType }} == 'yaml')
       uses: mikefarah/yq@v4.25.2
       with:
