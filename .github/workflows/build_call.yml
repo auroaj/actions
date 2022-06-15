@@ -3,8 +3,8 @@ name: CreatePR call
 on:
   workflow_dispatch:
     inputs:
-      tag:
-        description: tag
+      imageTag:
+        description: imageTag
         required: true
         type: string
         default: "0.110.13"
@@ -13,6 +13,21 @@ on:
         required: true
         type: string
         default: "auroaj/sec"
+      configType:
+        description: configType
+        required: true
+        type: string
+        default: "cm"
+      configmap_prop:
+        description: configmap_prop
+        required: false
+        type: string
+        default: 'data."value.yaml"'
+      yaml_prop:
+        description: yaml_prop
+        required: true
+        type: string
+        default: "app.imageTag"
       github_event_name:
         description: github.event_name
         required: false
@@ -27,8 +42,11 @@ jobs:
       tag: ${{ github.event.inputs.tag }}
       target_repository: ${{ github.event.inputs.target_repository }}
       # pathValues: "values.yaml"
-      pathValues: "2-app-workflows-cm.yaml"
-      stringToSearch: "imageTag"
+      configFile: "2-app-workflows-cm.yaml"
+      # stringToSearch: "imageTag"
+      configType: ${{ github.event.inputs.configType }}
+      configmap_prop: ${{ github.event.inputs.configmap_prop }}
+      yaml_prop: ${{ github.event.inputs.yaml_prop }}
 
       github_event_name: ${{ github.event_name }}
     secrets:

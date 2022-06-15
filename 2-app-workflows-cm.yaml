@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-workflows-values
+  namespace: app-workflows
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+data:
+  values.yaml: |-
+    env: "uat"
+    region: "us-east1"
+    gcp:
+      projectId: "backend-uat-14dd"
+      pubSubProjectId: "nucleus-uat-0a26"
+      sub:
+        addAppTopic: "uat_add_app"
+        deleteAppTopic: "uat_remove_app"
+        updateAppTopic: "uat_update_app"
+        jsonBody: true
+      pub:
+        stepOperationTopic: "uat_operation_step"
+        statusOperationTopic: "uat_operation_status"
+    wordpress:
+      chartVersion: 0.7.14
+    slacksecret:
+      enabled: false
+    app:
+      imageTag: 0.110.13
+    amp:
+      imageTag: 0.110.34
