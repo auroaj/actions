@@ -54,6 +54,7 @@ jobs:
       uses: mikefarah/yq@v4.25.2
       with:
         cmd: |
+          ls -la
           CM_PROP='${{ inputs.configmap_prop }}'
           Y_PROP="${{ inputs.yaml_prop }}"
 
