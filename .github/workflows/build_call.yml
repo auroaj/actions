@@ -37,6 +37,7 @@ on:
 
 jobs:
   call-build-dev:
+    if: ${{ inputs.configType == 'cm' }}
     uses: ./.github/workflows/create_pr.yml
     with:
       target_repository: ${{ github.event.inputs.target_repository }}
@@ -52,6 +53,7 @@ jobs:
       GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
 
   call-build-yaml:
+    if: ${{ inputs.configType == 'yaml' }}
     uses: ./.github/workflows/create_pr.yml
     with:
       target_repository: ${{ github.event.inputs.target_repository }}

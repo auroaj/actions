@@ -51,7 +51,7 @@ jobs:
         path: target_repo
 
     - name: Update image version in ConfigMap
-      if: $(${{ inputs.configType }} == 'cm')
+      if: ${{ inputs.configType == 'cm' }}
       uses: mikefarah/yq@v4.25.2
       # working-directory: target_repo
       # run: |
@@ -74,13 +74,14 @@ jobs:
           rm data.tmp
 
     - name: Update image version in YAML
-      if: $(${{ inputs.configType }} == 'yaml')
+      if: ${{ inputs.configType == 'yaml' }}
       uses: mikefarah/yq@v4.25.2
       with:
         cmd: |
           cd target_repo
           ls -la
           yq -i '.${{ inputs.yaml_prop }} = "${{ inputs.imageTag }}"' ${{ inputs.configFile }}
+          cat ${{ inputs.configFile }}
 
     # - name: Update Image Version in the related HelmChart values.yaml
     #   uses: fjogeleit/yaml-update-action@v0.10.0
