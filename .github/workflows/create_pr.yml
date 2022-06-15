@@ -52,6 +52,7 @@ jobs:
 
     - name: Update image version in ConfigMap
       # uses: mikefarah/yq@v4.25.2
+      working-directory: target_repo
       run: |
         VERSION=v4.25.0
         BINARY=yq_linux_amd64
