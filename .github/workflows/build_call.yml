@@ -22,7 +22,7 @@ on:
         description: configmap_prop
         required: false
         type: string
-        default: 'data."value.yaml"'
+        default: 'data."values.yaml"'
       yaml_prop:
         description: yaml_prop
         required: true
