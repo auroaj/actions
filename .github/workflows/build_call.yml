@@ -50,3 +50,16 @@ jobs:
     secrets:
       GIT_ACTION_PAT: ${{ secrets.GIT_ACTION_PAT }}
       GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
+  call-build-yaml:
+    uses: ./.github/workflows/create_pr.yml
+    with:
+      target_repository: ${{ github.event.inputs.target_repository }}
+      configFile: "values.yaml"
+      imageTag: ${{ github.event.inputs.imageTag }}
+      configType: "yaml"
+      yaml_prop: ${{ github.event.inputs.yaml_prop }}
+      github_event_name: ${{ github.event_name }}
+    secrets:
+      GIT_ACTION_PAT: ${{ secrets.GIT_ACTION_PAT }}
+      GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
