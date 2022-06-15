@@ -39,11 +39,9 @@ jobs:
   call-build-dev:
     uses: ./.github/workflows/create_pr.yml
     with:
-      tag: ${{ github.event.inputs.tag }}
       target_repository: ${{ github.event.inputs.target_repository }}
-      # pathValues: "values.yaml"
       configFile: "2-app-workflows-cm.yaml"
-      # stringToSearch: "imageTag"
+      imageTag: ${{ github.event.inputs.imageTag }}
       configType: ${{ github.event.inputs.configType }}
       configmap_prop: ${{ github.event.inputs.configmap_prop }}
       yaml_prop: ${{ github.event.inputs.yaml_prop }}
