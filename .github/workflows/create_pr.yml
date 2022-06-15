@@ -58,6 +58,8 @@ jobs:
           # BINARY=yq_linux_amd64
           # wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY} -O /usr/bin/yq &&\
           # chmod +x /usr/bin/yq
+          # yq ".$CM_PROP" ${{ inputs.configFile }} > data.tmp
+          # yq -i '.'$Y_PROP' = "${{ inputs.imageTag }}\"' data.tmp
       with:
         cmd: |
           cd target_repo
@@ -65,9 +67,9 @@ jobs:
           CM_PROP='${{ inputs.configmap_prop }}'
           Y_PROP='${{ inputs.yaml_prop }}'
 
-          yq ".$CM_PROP" ${{ inputs.configFile }} > data.tmp
-          yq -i ".$Y_PROP = \"${{ inputs.imageTag }}\"" data.tmp
-          DATA=$(cat data.tmp) yq -i '.'$CM_PROP' = strenv(DATA)' ${{ inputs.configFile }}
+          yq '.${{ inputs.configmap_prop }}' ${{ inputs.configFile }} > data.tmp
+          yq -i '.${{ inputs.yaml_prop }} = "${{ inputs.imageTag }}"' data.tmp
+          DATA=$(cat data.tmp) yq -i '.${{ inputs.configmap_prop }} = strenv(DATA)' ${{ inputs.configFile }}
           rm data.tmp
 
     # - name: Update Image Version in the related HelmChart values.yaml
