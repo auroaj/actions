@@ -51,17 +51,20 @@ jobs:
         path: target_repo
 
     - name: Update image version in ConfigMap
-      uses: mikefarah/yq@v4.25.2
-      with:
-        cmd: |
-          ls -la
-          CM_PROP='${{ inputs.configmap_prop }}'
-          Y_PROP="${{ inputs.yaml_prop }}"
+      # uses: mikefarah/yq@v4.25.2
+      run: |
+        VERSION=v4.25.0
+        BINARY=yq_linux_amd64
+        wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY} -O /usr/bin/yq &&\
+        chmod +x /usr/bin/yq
+        ls -la
+        CM_PROP='${{ inputs.configmap_prop }}'
+        Y_PROP='${{ inputs.yaml_prop }}'
 
-          yq ".$CM_PROP" ${{ inputs.configFile }} > data.tmp
-          yq -i ".$Y_PROP = \"${{ inputs.imageTag }}\"" data.tmp
-          DATA=$(cat data.tmp) yq -i '.'$CM_PROP' = strenv(DATA)' ${{ inputs.configFile }}
-          rm data.tmp
+        yq ".$CM_PROP" ${{ inputs.configFile }} > data.tmp
+        yq -i ".$Y_PROP = \"${{ inputs.imageTag }}\"" data.tmp
+        DATA=$(cat data.tmp) yq -i '.'$CM_PROP' = strenv(DATA)' ${{ inputs.configFile }}
+        rm data.tmp
 
     # - name: Update Image Version in the related HelmChart values.yaml
     #   uses: fjogeleit/yaml-update-action@v0.10.0
