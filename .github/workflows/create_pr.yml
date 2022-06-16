@@ -83,21 +83,6 @@ jobs:
           yq -i '.${{ inputs.yaml_prop }} = "${{ inputs.imageTag }}"' ${{ inputs.configFile }}
           cat ${{ inputs.configFile }}
 
-    # - name: Update Image Version in the related HelmChart values.yaml
-    #   uses: fjogeleit/yaml-update-action@v0.10.0
-    #   with:
-    #     valueFile: ${{ inputs.configFile }}
-    #     propertyPath: "data['values.yaml'].app.imageTag"
-    #     value: ${{ inputs.imageTag }}
-    #     repository: ${{ inputs.target_repository }}
-    #     branch: create_pr/${{ inputs.imageTag }}
-    #     targetBranch: master
-    #     createPR: true
-    #     labels: 'imageimageTag-update'
-    #     message: 'Update Image Version to ${{ inputs.imageTag }}'
-    #     token: ${{ secrets.GIT_ACTION_PAT }}
-    #     workDir: target_repo
-
     - name: Commit changes
       env:
         imageTag: ${{ inputs.imageTag }}

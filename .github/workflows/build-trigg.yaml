@@ -1,15 +1,15 @@
 name: Build Trigger Container
 
 on:
-  push:
-    branches:
-      - push
+  # push:
+  #   branches:
+  #     - push
   #   paths:
   #     - "amp/**"
   #     - ".github/workflows/build-amp-container.yaml"
-  # pull_request:
-  #   branches:
-  #     - main
+  pull_request:
+    branches:
+      - main
   #   paths:
   #     - "amp/**"
   #     - ".github/workflows/build-amp-container.yaml"
@@ -38,20 +38,23 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # v2.3.4
 
-      - name: Get Changes
-        if: ${{ github.event_name != 'workflow_run' }}
-        id: files
-        uses: jitterbit/get-changed-files@v1
-        with:
-          format: 'space-delimited'
+      - run: |
+          echo ${{ github }}
 
-      - name: check
-        if: ${{ github.event_name != 'workflow_run' }}
-        id: check
-        run: |
-          echo "${{ steps.files.outputs.all }}" | grep "base/" && export skip_build="true" || true
-          echo ${skip_build}
-          echo "::set-output name=skip_build::${skip_build}"
+      # - name: Get Changes
+      #   if: ${{ github.event_name != 'workflow_run' }}
+      #   id: files
+      #   uses: jitterbit/get-changed-files@v1
+      #   with:
+      #     format: 'space-delimited'
+
+      # - name: check
+      #   if: ${{ github.event_name != 'workflow_run' }}
+      #   id: check
+      #   run: |
+      #     echo "${{ steps.files.outputs.all }}" | grep "base/" && export skip_build="true" || true
+      #     echo ${skip_build}
+      #     echo "::set-output name=skip_build::${skip_build}"
 
   push:
     if: ${{ needs.check-if.outputs.skip_build != 'true' }}
