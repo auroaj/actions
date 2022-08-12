@@ -40,8 +40,9 @@ jobs:
     steps:
       - name: Clean up runner
         run: |
-          echo ${{ github.head_ref }}
-          echo ${{ github.head_ref.replace(/\//g, "_") }}
+          tag=${{ github.head_ref }}
+          tag=${tag//\//_}
+          echo ${tag}
 
   call-build-dev:
     if: ${{ inputs.configType == 'cm' }}
