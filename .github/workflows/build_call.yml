@@ -28,14 +28,21 @@ on:
         required: true
         type: string
         default: "app.imageTag"
-      github_event_name:
-        description: github.event_name
+      github_event_url:
+        description: github.event.pull_request.html_url
         required: false
         type: string
-        default: 'push'
 
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clean up runner
+        run: |
+          echo ${{ github.head_ref }}
+          echo ${{ github.head_ref.replace(/\//g, "_") }}
+
   call-build-dev:
     if: ${{ inputs.configType == 'cm' }}
     uses: ./.github/workflows/create_pr.yml
@@ -46,8 +53,8 @@ jobs:
       configType: ${{ github.event.inputs.configType }}
       configmap_prop: ${{ github.event.inputs.configmap_prop }}
       yaml_prop: ${{ github.event.inputs.yaml_prop }}
-
-      github_event_name: ${{ github.event_name }}
+      title: "ConfigMap argocd"
+      github_event_url: ${{ github.event.pull_request.html_url }}
     secrets:
       GIT_ACTION_PAT: ${{ secrets.GIT_ACTION_PAT }}
       GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
@@ -61,7 +68,8 @@ jobs:
       imageTag: ${{ github.event.inputs.imageTag }}
       configType: "yaml"
       yaml_prop: ${{ github.event.inputs.yaml_prop }}
-      github_event_name: ${{ github.event_name }}
+      github_event_url: ${{ github.event.pull_request.html_url }}
+      title: "Wordpress values.yaml"
     secrets:
       GIT_ACTION_PAT: ${{ secrets.GIT_ACTION_PAT }}
       GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
