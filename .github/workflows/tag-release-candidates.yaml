@@ -56,7 +56,7 @@ jobs:
         with:
           script: |
             try {
-              console.log("trying delete tag ", "${{ steps.latest_release_candidate_tag.outputs.RELEASE_VERSION }}")
+              console.log("trying delete tag ", "${{ steps.latest_release_candidate_tag.outputs.RELEASE_VERSION }}");
               await github.rest.git.deleteRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -66,8 +66,9 @@ jobs:
               });
             }
             catch {
-              console.log("delete Failed")
+              console.log("delete failed");
             }
+            console.log("creating tag");
             await github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
