@@ -56,8 +56,8 @@ jobs:
         with:
           script: |
             try {
-              console.log("trying update tag ", "${{ steps.latest_release_candidate_tag.outputs.RELEASE_VERSION }}")
-              await github.rest.git.updateRef({
+              console.log("trying delete tag ", "${{ steps.latest_release_candidate_tag.outputs.RELEASE_VERSION }}")
+              await github.rest.git.deleteRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 ref: 'refs/tags/${{ steps.latest_release_candidate_tag.outputs.RELEASE_VERSION }}',
@@ -66,14 +66,14 @@ jobs:
               });
             }
             catch {
-              console.log("Update Failed, creating")
-              await github.rest.git.createRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: 'refs/tags/${{ steps.latest_release_candidate_tag.outputs.RELEASE_VERSION }}',
-                sha: context.sha
-              });
+              console.log("delete Failed")
             }
+            await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/${{ steps.latest_release_candidate_tag.outputs.RELEASE_VERSION }}',
+              sha: context.sha
+            });
 
 
           # await github.rest.git.updateRef({
