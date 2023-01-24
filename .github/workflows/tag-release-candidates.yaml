@@ -55,6 +55,13 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            await github.rest.git.deleteRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/${{ steps.latest_release_candidate_tag.outputs.RELEASE_VERSION }}',
+              sha: context.sha,
+              force: true
+            });
             try {
               console.log("trying delete tag ", "${{ steps.latest_release_candidate_tag.outputs.RELEASE_VERSION }}");
               await github.rest.git.deleteRef({
