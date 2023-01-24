@@ -59,7 +59,7 @@ jobs:
             await github.rest.git.updateRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: 'refs/tags/${{ steps.latest_release_candidate_tag.outputs.RELEASE_VERSION }}',
+              ref: 'tags/${{ steps.latest_release_candidate_tag.outputs.RELEASE_VERSION }}',
               sha: context.sha,
               force: true
             });
